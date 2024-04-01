@@ -50,7 +50,11 @@ func _physics_process(delta):
 	if direction:
 		print(max_speed)
 		print(p_meter)
-		velocity.x = move_toward(velocity.x , direction * max_speed, ACCEL * delta)
+		print(velocity.x)
+		if((direction * velocity.x) < 0):
+			velocity.x = move_toward(velocity.x, 0, DECEL * 2 * delta)
+		else:
+			velocity.x = move_toward(velocity.x , direction * max_speed, ACCEL * delta)
 		facing_direction = direction
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECEL * delta) # decelerates the max speed and multiplied with delta
