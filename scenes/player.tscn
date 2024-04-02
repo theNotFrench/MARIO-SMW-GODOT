@@ -1,7 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://6t88c7yfud6u"]
+[gd_scene load_steps=20 format=3 uid="uid://6t88c7yfud6u"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_1le2r"]
 [ext_resource type="Texture2D" uid="uid://b4tyt48gmkhxu" path="res://images/mini_mario-sprites.png" id="2_6h61k"]
+[ext_resource type="Texture2D" uid="uid://bwfr4v04nkngv" path="res://images/spin_added.png" id="3_v0vqg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1wa7"]
+atlas = ExtResource("3_v0vqg")
+region = Rect2(315, 27, 35, 27)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v6kw8"]
 atlas = ExtResource("2_6h61k")
@@ -23,6 +28,22 @@ region = Rect2(210, 0, 35, 27)
 atlas = ExtResource("2_6h61k")
 region = Rect2(245, 0, 35, 27)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty1qb"]
+atlas = ExtResource("3_v0vqg")
+region = Rect2(0, 0, 35, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aj0lb"]
+atlas = ExtResource("3_v0vqg")
+region = Rect2(315, 54, 35, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lsxkc"]
+atlas = ExtResource("3_v0vqg")
+region = Rect2(280, 54, 35, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u751r"]
+atlas = ExtResource("3_v0vqg")
+region = Rect2(70, 0, 35, 27)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_7ct3l"]
 atlas = ExtResource("2_6h61k")
 region = Rect2(315, 0, 35, 27)
@@ -37,6 +58,14 @@ region = Rect2(35, 0, 35, 27)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fmdwj"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l1wa7")
+}],
+"loop": true,
+"name": &"mini_crouch",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_v6kw8")
@@ -74,6 +103,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ty1qb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aj0lb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lsxkc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u751r")
+}],
+"loop": true,
+"name": &"mini_spin",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_7ct3l")
 }],
 "loop": true,
@@ -106,7 +152,7 @@ script = ExtResource("1_1le2r")
 position = Vector2(-5.68434e-14, 8)
 scale = Vector2(1.44444, 1.58)
 sprite_frames = SubResource("SpriteFrames_fmdwj")
-animation = &"mini_walk"
+animation = &"mini_crouch"
 autoplay = "mini_idle"
 
 [node name="AreaCollisionShape" type="Area2D" parent="."]

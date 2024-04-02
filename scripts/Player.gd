@@ -14,8 +14,11 @@ const MAX_P_METER = 1.867 # this is the maximum the p meter can hold
 var p_meter: float = 0.0 # p meter itself
 const JUMP_VELOCITY = -400.0 
 
-
-
+var jump_pressed_time = 0.0
+const RUN_JUMP_VELOCITY = -450.0
+const SPIN_JUMP_VELOCITY = -200
+const MAX_JUMP_DURATION = 0.2
+var speedup = false;
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var animation = get_node("AnimatedSprite2D")
@@ -34,22 +37,29 @@ func _physics_process(delta):
 		p_meter = max(p_meter - delta , 0) # decreases - 2 and multiplied by the time in each frame has passed, the min cap is 0
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		_handle_jumping()
 		animation.play("mini_jump") # silly jump
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+		
+	
+	
+	var jump_velocity = JUMP_VELOCITY
 	var direction = Input.get_axis("backwards", "forward")
 	var max_speed = SPEED
 	if Input.is_action_pressed("running"):
+		speedup = true;
+		jump_velocity = RUN_JUMP_VELOCITY
 		if p_meter >= MAX_P_METER:
 				max_speed = MAX_SPRINT
 		else:
 			max_speed = MAX_RUN
 	else:
 			max_speed = SPEED
+			jump_velocity = JUMP_VELOCITY
 	if direction:
 		print(max_speed)
+		print(velocity.y)
 		print(p_meter)
+		print(speedup)
 		print(velocity.x)
 		if((direction * velocity.x) < 0):
 			velocity.x = move_toward(velocity.x, 0, DECEL * 2 * delta)
@@ -62,6 +72,9 @@ func _physics_process(delta):
 	if(velocity.y > 0):
 		animation.play("mini_fall")
 	
+	if(jump_pressed_time > 0.0):
+		velocity.y = jump_velocity
+	
 	if velocity.x:
 		if (p_meter == MAX_P_METER && velocity.y == 0): #max of the p_meter and checks wether youre not in the air
 			animation.play("mini_run")
@@ -70,6 +83,11 @@ func _physics_process(delta):
 	else:
 		if(velocity.y == 0): # when its on the ground the Y axis is 0 so it goes idle
 			animation.play("mini_idle")
+		
+	
+	if(Input.is_action_pressed("down") && velocity.y == 0):
+		animation.play("mini_crouch")
+		velocity.x = move_toward(velocity.x, 0, DECEL * delta)
 	
 	if(direction* sign(velocity.x) == -1 && velocity.y == 0): # causes the turning animation to happen whent he direction switches to a negative number
 		animation.play("mini_turn")
@@ -79,3 +97,11 @@ func _physics_process(delta):
 		animation.flip_h = false
 	
 	move_and_slide()
+func _handle_jumping():
+	var jump_height_factor = 1.0 + abs(velocity.x) / MAX_RUN
+	if(speedup == true && abs(velocity.x) != 0):
+			velocity.y = RUN_JUMP_VELOCITY
+	else:
+			velocity.y = JUMP_VELOCITY
+			speedup = false;
+	
