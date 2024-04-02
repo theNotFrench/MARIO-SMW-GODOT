@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 const SPEED: float = 135.0 # walking speed
 const MAX_RUN: float = 180.0 # running speed not the max fully yet
-const MAX_SPRINT: float = 200.0 # the highest speed 
+const MAX_SPRINT: float = 230.0 # the highest speed 
 
 const ACCEL: float = 225.0 # how fast it goes from 0 to 135
 const DECEL: float = 500 # how fast it goes back to 0 velocity
@@ -17,7 +17,6 @@ const JUMP_VELOCITY = -400.0
 var jump_pressed_time = 0.0
 const RUN_JUMP_VELOCITY = -450.0
 const SPIN_JUMP_VELOCITY = -200
-const MAX_JUMP_DURATION = 0.2
 var speedup = false;
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -26,7 +25,6 @@ var facing_direction = -1
 
 
 func _physics_process(delta):
-
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -37,10 +35,15 @@ func _physics_process(delta):
 		p_meter = max(p_meter - delta , 0) # decreases - 2 and multiplied by the time in each frame has passed, the min cap is 0
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		_handle_jumping()
-		animation.play("mini_jump") # silly jump
-		
+			velocity.y = JUMP_VELOCITY
+			speedup = false;
+			animation.play("mini_jump") # silly jump
+	if(Input.is_action_just_released("jump") && velocity.y < 0):
+		velocity.y *= 0.5
 	
+	if(Input.is_action_pressed("spin")):
+		velocity.y = SPIN_JUMP_VELOCITY
+		animation.play("mini_spin")
 	
 	var jump_velocity = JUMP_VELOCITY
 	var direction = Input.get_axis("backwards", "forward")
@@ -59,7 +62,6 @@ func _physics_process(delta):
 		print(max_speed)
 		print(velocity.y)
 		print(p_meter)
-		print(speedup)
 		print(velocity.x)
 		if((direction * velocity.x) < 0):
 			velocity.x = move_toward(velocity.x, 0, DECEL * 2 * delta)
@@ -98,10 +100,7 @@ func _physics_process(delta):
 	
 	move_and_slide()
 func _handle_jumping():
+	const MAX_JUMP_DURATION = 0.2
+	
 	var jump_height_factor = 1.0 + abs(velocity.x) / MAX_RUN
-	if(speedup == true && abs(velocity.x) != 0):
-			velocity.y = RUN_JUMP_VELOCITY
-	else:
-			velocity.y = JUMP_VELOCITY
-			speedup = false;
 	
