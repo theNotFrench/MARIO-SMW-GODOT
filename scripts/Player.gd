@@ -17,12 +17,13 @@ const JUMP_VELOCITY = -400.0
 var jump_pressed_time = 0.0
 const RUN_JUMP_VELOCITY = -450.0
 const SPIN_JUMP_VELOCITY = -290
+const PMETER_VELOCITY = -490.0
 var speedup = false;
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var animation = get_node("AnimatedSprite2D")
 var facing_direction = -1
-var spinning = false
+
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -36,7 +37,9 @@ func _physics_process(delta):
 	var result = _speed_calc()
 	var max_speed = result[0]
 	var jump_velocity = result[1]
-	_accel_and_decel(direction,max_speed,delta)
+	_spin()
+	var spinning = _spin()
+	_accel_and_decel(direction,max_speed,delta, spinning)
 	_p_meteranimations()
 	_crouch(delta)
 	_facing_direction(direction)
@@ -46,6 +49,10 @@ func _physics_process(delta):
 	move_and_slide()
 func _handle_jumping():
 	if Input.is_action_just_pressed("jump") and is_on_floor():
+		if(abs(velocity.x) == MAX_SPRINT ):
+			velocity.y = PMETER_VELOCITY
+			animation.play("mini_fly")
+		else:
 			velocity.y = JUMP_VELOCITY
 			speedup = false;
 			animation.play("mini_jump") # silly jump
@@ -82,7 +89,7 @@ func _pmeter_calc(delta):
 	else:
 		p_meter = max(p_meter - delta , 0) # decreases - 2 and multiplied by the time in each frame has passed, the min cap is 0
 	# Handle jump.
-func _accel_and_decel(direction,max_speed,delta):
+func _accel_and_decel(direction,max_speed,delta, spinning):
 	if direction:
 		print(velocity.x)
 		if((direction * velocity.x) < 0):
@@ -93,7 +100,8 @@ func _accel_and_decel(direction,max_speed,delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECEL * delta) # decelerates the max speed and multiplied with delta
 		facing_direction = direction # saves direction
-	if(velocity.y > 0):
+	print(spinning)
+	if(velocity.y > 0 && spinning == false):
 		animation.play("mini_fall")
 	
 func _crouch(delta):
@@ -107,3 +115,13 @@ func _facing_direction(direction):
 		animation.flip_h = true
 	elif(facing_direction == 1):
 		animation.flip_h = false
+func _spin():
+	var spinning = false;
+	if(Input.is_action_pressed("spin") && is_on_floor()):
+		animation.play("mini_spin")
+		velocity.y = SPIN_JUMP_VELOCITY
+		spinning = true;
+	else:
+		spinning = false;
+		
+	return spinning

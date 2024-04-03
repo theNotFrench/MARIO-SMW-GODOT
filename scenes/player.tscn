@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://6t88c7yfud6u"]
+[gd_scene load_steps=22 format=3 uid="uid://6t88c7yfud6u"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_1le2r"]
 [ext_resource type="Texture2D" uid="uid://b4tyt48gmkhxu" path="res://images/mini_mario-sprites.png" id="2_6h61k"]
@@ -11,6 +11,14 @@ region = Rect2(315, 27, 35, 27)
 [sub_resource type="AtlasTexture" id="AtlasTexture_v6kw8"]
 atlas = ExtResource("2_6h61k")
 region = Rect2(245, 27, 35, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulu6a"]
+atlas = ExtResource("2_6h61k")
+region = Rect2(315, 27, 35, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkllk"]
+atlas = ExtResource("2_6h61k")
+region = Rect2(350, 27, 35, 27)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ntdpq"]
 atlas = ExtResource("2_6h61k")
@@ -72,6 +80,17 @@ animations = [{
 }],
 "loop": true,
 "name": &"mini_fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ulu6a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkllk")
+}],
+"loop": true,
+"name": &"mini_fly",
 "speed": 5.0
 }, {
 "frames": [{
@@ -152,9 +171,8 @@ script = ExtResource("1_1le2r")
 position = Vector2(-0.138849, 8)
 scale = Vector2(1.43651, 1.58)
 sprite_frames = SubResource("SpriteFrames_fmdwj")
-animation = &"mini_spin"
+animation = &"mini_fly"
 autoplay = "mini_idle"
-frame_progress = 0.926251
 
 [node name="AreaCollisionShape" type="Area2D" parent="."]
 
