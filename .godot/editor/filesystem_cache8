@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1712099801
+::res://::1712146553
 export_presets.cfg::TextFile::-1::1712001174::0::1::::<><>::
 ::res://addons/::1712002832
 ::res://addons/discord-rpc-gd/::1712002835
@@ -57,8 +57,8 @@ ttinymarioR.png::CompressedTexture2D::1200422973441008652::1711889495::171188949
 ::res://resources/::1711803349
 ::res://resources/collisions/::1711891161
 small_mario_collision.tres::RectangleShape2D::8406421078149115096::1711891161::0::1::::<><>::
-::res://scenes/::1712087545
-player.tscn::PackedScene::2217140077644658606::1712087354::0::1::::<><>::res://scripts/Player.gd<>uid://b4tyt48gmkhxu::::res://images/mini_mario-sprites.png<>uid://bwfr4v04nkngv::::res://images/spin_added.png
-world_1_1.tscn::PackedScene::995810431188336753::1712087545::0::1::::<><>::uid://dnvjues5i2k71::::res://images/supermarioworld_tileset.PNG<>uid://6t88c7yfud6u::::res://scenes/player.tscn
-::res://scripts/::1712086109
-Player.gd::GDScript::-1::1712086109::0::1::::<>CharacterBody2D<>::
+::res://scenes/::1712103707
+player.tscn::PackedScene::2217140077644658606::1712103707::0::1::::<><>::res://scripts/Player.gd<>uid://b4tyt48gmkhxu::::res://images/mini_mario-sprites.png<>uid://bwfr4v04nkngv::::res://images/spin_added.png
+world_1_1.tscn::PackedScene::995810431188336753::1712103706::0::1::::<><>::uid://dnvjues5i2k71::::res://images/supermarioworld_tileset.PNG<>uid://6t88c7yfud6u::::res://scenes/player.tscn
+::res://scripts/::1712104488
+Player.gd::GDScript::-1::1712104488::0::1::::<>CharacterBody2D<>::
