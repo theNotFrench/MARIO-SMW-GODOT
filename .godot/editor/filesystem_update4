@@ -1,3 +1,1 @@
-res://scenes/player.tscn
-res://scripts/Player.gd
-res://scenes/world_1_1.tscn
+res://export_presets.cfg
