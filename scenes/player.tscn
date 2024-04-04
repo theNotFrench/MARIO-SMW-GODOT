@@ -171,8 +171,9 @@ script = ExtResource("1_1le2r")
 position = Vector2(-0.138849, 8)
 scale = Vector2(1.43651, 1.58)
 sprite_frames = SubResource("SpriteFrames_fmdwj")
-animation = &"mini_fly"
+animation = &"mini_walk"
 autoplay = "mini_idle"
+frame_progress = 0.99385
 
 [node name="AreaCollisionShape" type="Area2D" parent="."]
 

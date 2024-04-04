@@ -1,14 +1,14 @@
 extends CharacterBody2D
 
 
-const SPEED: float = 135.0 # walking speed
-const MAX_RUN: float = 180.0 # running speed not the max fully yet
-const MAX_SPRINT: float = 230.0 # the highest speed 
+const SPEED: float = 75.0 # walking speed
+const MAX_RUN: float = 135.0 # running speed not the max fully yet
+const MAX_SPRINT: float = 180.0 # the highest speed 
 
-const ACCEL: float = 225.0 # how fast it goes from 0 to 135
-const DECEL: float = 500 # how fast it goes back to 0 velocity
+const ACCEL: float = 337.5# how fast it goes from 0 to 135
+const DECEL: float = 225 # how fast it goes back to 0 velocity
 
-const P_METER_START = 178.25 # from this number on it starts the p_meter aka the actual running so it hit the max cap
+const P_METER_START = 131.25 # from this number on it starts the p_meter aka the actual running so it hit the max cap
 const MAX_P_METER = 1.867 # this is the maximum the p meter can hold
 
 var p_meter: float = 0.0 # p meter itself
@@ -39,7 +39,9 @@ func _physics_process(delta):
 	var jump_velocity = result[1]
 	_spin()
 	var spinning = _spin()
-	_accel_and_decel(direction,max_speed,delta, spinning)
+	_jump_speed(spinning)
+	var fly = _handle_jumping()
+	_accel_and_decel(direction,max_speed,delta, spinning , fly)
 	_p_meteranimations()
 	_crouch(delta)
 	_facing_direction(direction)
@@ -48,16 +50,25 @@ func _physics_process(delta):
 	
 	move_and_slide()
 func _handle_jumping():
+	var fly = false
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		if(abs(velocity.x) == MAX_SPRINT ):
 			velocity.y = PMETER_VELOCITY
 			animation.play("mini_fly")
+			fly = true
 		else:
 			velocity.y = JUMP_VELOCITY
 			speedup = false;
 			animation.play("mini_jump") # silly jump
 	if(Input.is_action_just_released("jump") && velocity.y < 0):
 		velocity.y *= 0.5
+	return fly
+func _jump_speed(spinning):
+	var base_speed = JUMP_VELOCITY
+	var speed_incr
+	if spinning:
+		base_speed = SPIN_JUMP_VELOCITY
+		speed_incr = S # finishing check your other chats for the rest of the code remmeber
 func _p_meteranimations():
 	if velocity.x:
 		if (p_meter == MAX_P_METER && velocity.y == 0): #max of the p_meter and checks wether youre not in the air
@@ -89,7 +100,7 @@ func _pmeter_calc(delta):
 	else:
 		p_meter = max(p_meter - delta , 0) # decreases - 2 and multiplied by the time in each frame has passed, the min cap is 0
 	# Handle jump.
-func _accel_and_decel(direction,max_speed,delta, spinning):
+func _accel_and_decel(direction,max_speed,delta, spinning , fly):
 	if direction:
 		print(velocity.x)
 		if((direction * velocity.x) < 0):
@@ -101,7 +112,7 @@ func _accel_and_decel(direction,max_speed,delta, spinning):
 		velocity.x = move_toward(velocity.x, 0, DECEL * delta) # decelerates the max speed and multiplied with delta
 		facing_direction = direction # saves direction
 	print(spinning)
-	if(velocity.y > 0 && spinning == false):
+	if(velocity.y > 0 && !spinning && !fly):
 		animation.play("mini_fall")
 	
 func _crouch(delta):
@@ -116,12 +127,10 @@ func _facing_direction(direction):
 	elif(facing_direction == 1):
 		animation.flip_h = false
 func _spin():
-	var spinning = false;
+	var spinning = true;
 	if(Input.is_action_pressed("spin") && is_on_floor()):
 		animation.play("mini_spin")
 		velocity.y = SPIN_JUMP_VELOCITY
 		spinning = true;
-	else:
-		spinning = false;
 		
 	return spinning

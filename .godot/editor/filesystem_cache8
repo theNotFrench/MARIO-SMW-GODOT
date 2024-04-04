@@ -1,6 +1,6 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1712171469
-export_presets.cfg::TextFile::-1::1712171046::0::1::::<><>::
+::res://::1712263881
+export_presets.cfg::TextFile::-1::1712172627::0::1::::<><>::
 ::res://addons/::1712002832
 ::res://addons/discord-rpc-gd/::1712002835
 Debug.svg::CompressedTexture2D::1414570589633831756::1712002832::1712002835::1::::<><>::
@@ -57,12 +57,12 @@ ttinymarioR.png::CompressedTexture2D::1200422973441008652::1711889495::171188949
 ::res://resources/::1711803349
 ::res://resources/collisions/::1711891161
 small_mario_collision.tres::RectangleShape2D::8406421078149115096::1711891161::0::1::::<><>::
-::res://scenes/::1712171049
-player.tscn::PackedScene::2217140077644658606::1712171049::0::1::::<><>::res://scripts/Player.gd<>uid://b4tyt48gmkhxu::::res://images/mini_mario-sprites.png<>uid://bwfr4v04nkngv::::res://images/spin_added.png
-world_1_1.tscn::PackedScene::995810431188336753::1712171049::0::1::::<><>::uid://dnvjues5i2k71::::res://images/supermarioworld_tileset.PNG<>uid://6t88c7yfud6u::::res://scenes/player.tscn
-::res://scripts/::1712166653
-Player.gd::GDScript::-1::1712166652::0::1::::<>CharacterBody2D<>::
-::res://website/::1712168110
+::res://scenes/::1712255276
+player.tscn::PackedScene::2217140077644658606::1712255276::0::1::::<><>::res://scripts/Player.gd<>uid://b4tyt48gmkhxu::::res://images/mini_mario-sprites.png<>uid://bwfr4v04nkngv::::res://images/spin_added.png
+world_1_1.tscn::PackedScene::995810431188336753::1712255276::0::1::::<><>::uid://dnvjues5i2k71::::res://images/supermarioworld_tileset.PNG<>uid://6t88c7yfud6u::::res://scenes/player.tscn
+::res://scripts/::1712255395
+Player.gd::GDScript::-1::1712255395::0::1::::<>CharacterBody2D<>::
+::res://website/::1712171523
 index.apple-touch-icon.png::CompressedTexture2D::4967279227857565193::1712168084::1712168110::1::::<><>::
 index.icon.png::CompressedTexture2D::7421022260048441111::1712168084::1712168110::1::::<><>::
 index.png::CompressedTexture2D::3873281774302045007::1712168084::1712168110::1::::<><>::
